@@ -1,5 +1,5 @@
 # OWT
-Offensive Wifi Toolkit (OWT) is a bash script for useful Wifi hacking
+Offensive Wifi Toolkit (OWT) is a bash script with useful Wifi hacking Tools
 
 ![banner](img/img6.png)
 
