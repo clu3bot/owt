@@ -26,7 +26,7 @@ This tool compiles 4 different attack modes for Wifi Networks compiled with a U.
 
 ![img1](img/img1.png)
 
-> Then the script will check if your Monitor or Managed mode and then prompt the user to put device in managed mode if need be.
+> Then the script will check if the user is in Monitor or Managed mode and then prompt the user to put device in Managed mode if need be.
 
 ![img2](img/img2.png)
 
