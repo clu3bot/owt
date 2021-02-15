@@ -2,7 +2,10 @@
 Offensive Wifi Toolkit (OWT) is a bash script for useful Wifi hacking
 
 ![banner](img/img6.png)
-
+[![GitHub issues](https://img.shields.io/github/issues/clu3bot/OWT)](https://github.com/clu3bot/OWT/issues)
+[![GitHub license](https://img.shields.io/github/license/clu3bot/OWT)](https://github.com/clu3bot/OWT/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/clu3bot/OWT)](https://github.com/clu3bot/OWT/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/clu3bot/OWT)](https://github.com/clu3bot/OWT/network)
 # Offensive Wifi Toolkit
 This tool compiles 4 different attack modes for Wifi Networks compiled with a U.I for easy use.
 
