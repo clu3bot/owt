@@ -27,9 +27,9 @@ Option 5 on the Main Menu is Wifi Attacks. Selecting this will bring the user to
 ![img5](img/img5.png)
 
 # Dependencies 
-aircrack-ng
-mdk3
-***OTW tool will prompt the user to download these dependencies if they arent installed.***
+* aircrack-ng 
+* mdk3
+* ***OTW tool will prompt the user to download these dependencies if they arent installed.***
 
 # Notice
 
