@@ -45,7 +45,7 @@ This tool compiles 4 different attack modes for Wifi Networks compiled with a U.
 # Dependencies 
 * aircrack-ng 
 * mdk3
-* ***OTW tool will prompt the user to download these dependencies if they arent installed.***
+* ***OWT tool will prompt the user to download these dependencies if they arent installed.***
 
 # Notice
 
