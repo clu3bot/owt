@@ -22,7 +22,7 @@ This tool compiles 4 different attack modes for Wifi Networks compiled with a U.
 **Note: OWT requires root privileges**
 
 # Useage
-> When the script is run the first thing the user will see is the Intro page
+> When the script is run the first thing the user will see is the Intro page. It will prompt the user to press Enter which will then automatically check for dependant packages. 
 
 ![img1](img/img1.png)
 
