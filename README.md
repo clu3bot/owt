@@ -9,19 +9,19 @@ Offensive Wifi Toolkit (owt) created by Brennan Mccown (clu3bot)
       <img src="https://img.shields.io/maintenance/yes/2021" />
     </a>
     <a href="">
-      <img src="https://img.shields.io/github/issues/clu3bot/OWT" />
+      <img src="https://img.shields.io/github/issues/clu3bot/owt" />
     </a>
     <a href="">
-      <img src="https://img.shields.io/github/license/clu3bot/OWT" />
+      <img src="https://img.shields.io/github/license/clu3bot/owt" />
     </a>
     <a href="">
-      <img src="https://img.shields.io/github/stars/clu3bot/OWT" />
+      <img src="https://img.shields.io/github/stars/clu3bot/owt" />
     </a>
     <a href="">
-      <img src="https://img.shields.io/github/forks/clu3bot/OWT" />
+      <img src="https://img.shields.io/github/forks/clu3bot/owt" />
     </a>  
     <a href="">
-      <img src="https://img.shields.io/github/repo-size/clu3bot/OWT" />
+      <img src="https://img.shields.io/github/repo-size/clu3bot/owt" />
     </a>
 <p align="center">  
 This tool compiles 4 different attack modes for Wireless Networks compiled with a U.I for easy use.
@@ -41,7 +41,7 @@ This tool compiles 4 different attack modes for Wireless Networks compiled with 
 # Installation & Running the script
 ```
 ~ $ git clone https://github.com/clu3bot/OWT.git
-~ $ cd OWT
+~ $ cd owt
 ~ $ sudo bash owt.sh
 ```
 **Note: OWT requires root privileges**
