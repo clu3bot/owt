@@ -72,6 +72,10 @@ This tool compiles 4 different attack modes for Wireless Networks compiled with 
 * mdk3
 * ***OWT tool will prompt the user to download these dependencies if they arent installed.***
 
+# History
+**owt version history can be found here**
+* [Versions](https://github.com/clu3bot/owt/wiki/Versions)
+
 # Notice
 
 This script is intended to be used on networks you own. Don't use this script maliciously. You are responsible for your own actions.
