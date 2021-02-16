@@ -2,7 +2,7 @@
 #Offensive Wifi Toolkit (OWT)
 #Project start date (Feb. 8 2021)
 #Created By Brennan Mccown (clu3bot)
-#Version 1.0.0
+#Version 1.1.0
 #GPL v3.0 License
 #
 
@@ -29,8 +29,12 @@ contactinfo="brennanmccown@protonmail.com"
 #
 clear
 #
+ewr() {
+    sleep 0.05
+    echo -e "$@"
+}
+
 #prints intro 1
-sleep 0.05
 echo -e "${LRED}
     ███████    █████   ███   █████ ███████████
   ███░░░░░███ ░░███   ░███  ░░███ ░█░░░███░░░█
@@ -40,24 +44,19 @@ echo -e "${LRED}
 ░░███     ███   ░░░█████░█████░       ░███    
  ░░░███████░      ░░███ ░░███         █████   
    ░░░░░░░         ░░░   ░░░         ░░░░░ "  
-sleep 0.05
+
 echo -e "${YELLOW} \n         Offensive Wifi Toolkit (${filename})"
-sleep 0.05
 echo -e "${LBLUE}\n     Created by ${creator}"
-sleep 0.05
 echo -e "${LBLUE}                 Version ${version}${NONE}"
-sleep 0.05
 echo -e "${YELLOW}\n                     ...${NONE} "
 #Sleeps for 2 seconds
 sleep 2
 clear
 #
 #print intro 2
-echo -e "${LRED}Welcome To Offensive Wifi Toolkit${NONE}\n"
-sleep 0.05
-echo -e "${LGREEN}*********************************************${NONE}"
-sleep 0.05
-echo -e "${YELLOW}These tools are meant for use on networks you own\nHack at your own risk\n${NONE}"
+ewr  "${LRED}Welcome To Offensive Wifi Toolkit${NONE}\n"
+ewr  "${LGREEN}*********************************************${NONE}"
+ewr  "${YELLOW}These tools are meant for use on networks you own\nHack at your own risk\n${NONE}"
 for dev in /sys/class/net/*; do
     if [ -e "$dev"/wireless ]; then
         iwdev=${dev##*/};
@@ -65,16 +64,11 @@ for dev in /sys/class/net/*; do
     fi
 done
 mode=$(iwconfig "$iwdev" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
-sleep 0.05
-echo -e "[${LRED}Interface${NONE}] ${LBLUE}${iwdev}${NONE}"
+ewr "[${LRED}Interface${NONE}] ${LBLUE}${iwdev}${NONE}"
 dn=$(lsb_release -is)
-sleep 0.05
-echo -e "[${LRED}Distribution${NONE}] ${LBLUE}${dn}${NONE}"
-sleep 0.05
-echo -e "${LGREEN}*************************************${NONE}"
-sleep 0.05
-echo -e "${LBLUE}Check if all necessary packages are installed${NONE}"
-sleep 0.05
+ewr "[${LRED}Distribution${NONE}] ${LBLUE}${dn}${NONE}"
+ewr "${LGREEN}*********************************************${NONE}"
+ewr "${LBLUE}Check if all necessary packages are installed${NONE}"
 read -p "Press Enter to Continue.."
 
 #
@@ -109,13 +103,13 @@ fi
 if [ "$Mod" == "Monitor" ]; then
         sleep 0.1
 else
-        echo -e "${LBLUE}This script requires $mon mode, would you like to enable it now? ${LRED}(Y/N)${NONE}"
+        ewr "${LBLUE}This script requires $mon mode, would you like to enable it now? ${LRED}(Y/N)${NONE}"
 
 	read -r re
 fi
 if [[ "$re" == ["yY"]* ]]; then
         ! sudo ifconfig wlan0 up
-        echo -e "${YELLOW} wlan0 is enabled${LRED}"
+        echo -e "${YELLOW}wlan0 is enabled${LRED}"
         sudo airmon-ng start wlan0;
 fi
 done
@@ -144,40 +138,24 @@ Mod=Monitor
 else
 Mod=Managed
 fi
-	echo -e "\n${NONE}[${LRED}Interface${NONE}]${LBLUE} ${iwdev}${NONE}   [${LRED}Mode${NONE}]${LBLUE} ${Mod}${NONE}   [${LRED}Target Network${NONE}]${LBLUE} ${nn}${NONE}\n"
-sleep 0.05
-	echo -e "\n${NONE}[${LRED}Options${NONE}]"
-sleep 0.05
-	echo -e "${LGREEN}*****************${NONE}"
-sleep 0.05
-	echo -e "[${LBLUE}General${NONE}]"
-sleep 0.05
-	echo -e "${YELLOW}0]Exit"
-sleep 0.05
-	echo -e "${YELLOW}1]Main Menu"
-sleep 0.05
-	echo -e "${YELLOW}2]Put Device in Monitor Mode"
-sleep 0.05
-	echo -e "${YELLOW}3]Put Device in Managed Mode"
-sleep 0.05
-	echo -e "${YELLOW}4]Scan Networks"
-sleep 0.05
-	echo -e "${LGREEN}*****************${NONE}"
-sleep 0.05
-	echo -e "[${LBLUE}Wifi Attacks${NONE}]"
-sleep 0.05
-	echo -e "${YELLOW}5]Wifi Attack Menu${NONE}"
-sleep 0.05
-	echo -e "${LGREEN}*****************${NONE}"
-sleep 0.05
-	echo -e "[${LBLUE}Other${NONE}]"
-sleep 0.05
-	echo -e "${YELLOW}6]About"
-sleep 0.05
-	echo -e "${LGREEN}*****************${NONE}"
-sleep 0.05
+	ewr "\n${NONE}[${LRED}Interface${NONE}]${LBLUE} ${iwdev}${NONE}   [${LRED}Mode${NONE}]${LBLUE} ${Mod}${NONE}   [${LRED}Target Network${NONE}]${LBLUE} ${nn}${NONE}\n"
+	ewr "\n${NONE}[${LRED}Options${NONE}]"
+	ewr "${LGREEN}*****************${NONE}"
+	ewr "[${LBLUE}General${NONE}]"
+	ewr "${YELLOW}0]Exit"
+	ewr "${YELLOW}1]Main Menu"
+	ewr "${YELLOW}2]Put Device in Monitor Mode"
+	ewr "${YELLOW}3]Put Device in Managed Mode"
+	ewr "${YELLOW}4]Scan Networks"
+	ewr "${LGREEN}*****************${NONE}"
+	ewr "[${LBLUE}Wifi Attacks${NONE}]"
+	ewr "${YELLOW}5]Wifi Attack Menu${NONE}"
+	ewr "${LGREEN}*****************${NONE}"
+	ewr "[${LBLUE}Other${NONE}]"
+	ewr "${YELLOW}6]About"
+	ewr "${LGREEN}*****************${NONE}"
 while true; do
-echo -e "\n${LRED}Select an option:${NONE}"
+ewr "\n${LRED}Select an option:${NONE}"
 read -p "$(tput setaf 7)" option
 case $option in  
 
@@ -283,54 +261,34 @@ clear
 #about page menu
 abouT () {
 clear
-sleep 0.05
-	echo -e "${LRED}About${NONE}"
-sleep 0.05
-	echo -e "${LGREEN}********************************${NONE}"
-sleep 0.05
-	echo -e "${YELLOW}Creator${NONE}:${YELLOW}$creator${NONE}"
-sleep 0.05
-	echo -e "${YELLOW}Github${NONE}:${YELLOW}$github${NONE}"
-sleep 0.05
-	echo -e "${YELLOW}Language${NONE}:${YELLOW}$language${NONE}"
-sleep 0.05
-	echo -e "${YELLOW}Version${NONE}:${YELLOW} $version${NONE}"
-sleep 0.05
-	echo -e "${YELLOW}Filename${NONE}:${YELLOW}$filename${NONE}"
-sleep 0.05
-	echo -e "${YELLOW}Contact${NONE}:${YELLOW}$contactinfo${NONE}"
-sleep 0.05
-	echo -e "${LGREEN}********************************${NONE}"
-sleep 0.05
-	echo -e "${LRED}Press 1 for Main Menu${NONE}"
+
+	ewr "${LRED}About${NONE}"
+	ewr "${LGREEN}********************************${NONE}"
+	ewr "${YELLOW}Creator${NONE}:${YELLOW}$creator${NONE}"
+	ewr "${YELLOW}Github${NONE}:${YELLOW}$github${NONE}"
+	ewr "${YELLOW}Language${NONE}:${YELLOW}$language${NONE}"
+	ewr "${YELLOW}Version${NONE}:${YELLOW} $version${NONE}"
+	ewr "${YELLOW}Filename${NONE}:${YELLOW}$filename${NONE}"
+	ewr "${YELLOW}Contact${NONE}:${YELLOW}$contactinfo${NONE}"
+	ewr "${LGREEN}********************************${NONE}"
+	ewr "${LRED}Press 1 for Main Menu${NONE}"
 }
 
 #wifi attacks menu
 wifiAttacks () {
 clear
 
-	echo -e "\n${NONE}[${LRED}Interface${NONE}]${LBLUE} ${iwdev}${NONE}   [${LRED}Mode${NONE}]${LBLUE} ${Mod}${NONE}   [${LRED}Target Network${NONE}]${LBLUE} ${nn}${NONE}\n"
-sleep 0.05
-	echo -e "${LGREEN}*****************${NONE}"
-sleep 0.05
-	echo -e "[${LBLUE}General${NONE}]"
-sleep 0.05
-	echo -e "${YELLOW}0]Main Menu"
-sleep 0.05
-	echo -e "${LGREEN}*****************${NONE}"
-sleep 0.05
-	echo -e "[${LBLUE}Wifi Attacks${NONE}]"
-sleep 0.05
-	echo -e "${YELLOW}1]Beacon Flood Attack"
-sleep 0.05
-	echo -e "${YELLOW}2]Deauth/Jamming Attack"
-sleep 0.05
-	echo -e "${YELLOW}3]Basic AP Probe"
-sleep 0.05
-	echo -e "${YELLOW}4]WIDS/WIPS Confusion Attack"
-sleep 0.05
-	echo -e "${LGREEN}*****************${NONE}"
-sleep 0.05
+	ewr "\n${NONE}[${LRED}Interface${NONE}]${LBLUE} ${iwdev}${NONE}   [${LRED}Mode${NONE}]${LBLUE} ${Mod}${NONE}   [${LRED}Target Network${NONE}]${LBLUE} ${nn}${NONE}\n"
+	ewr "${LGREEN}*****************${NONE}"
+	ewr "[${LBLUE}General${NONE}]"
+	ewr "${YELLOW}0]Main Menu"
+	ewr "${LGREEN}*****************${NONE}"
+	ewr "[${LBLUE}Wifi Attacks${NONE}]"
+	ewr "${YELLOW}1]Beacon Flood Attack"
+	ewr "${YELLOW}2]Deauth/Jamming Attack"
+	ewr "${YELLOW}3]Basic AP Probe"
+	ewr "${YELLOW}4]WIDS/WIPS Confusion Attack"
+	ewr "${LGREEN}*****************${NONE}"
 while true; do
 echo -e "${LRED}Select an option:${NONE}"
 read -p "$(tput setaf 7)" option
@@ -573,5 +531,3 @@ terminatioN
 }
 
 OWT
-
-
