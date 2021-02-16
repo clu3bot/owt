@@ -1,5 +1,5 @@
 <p align=center>
-Offensive Wifi Toolkit (OWT) created by Brennan Mccown (clu3bot)
+Offensive Wifi Toolkit (owt) created by Brennan Mccown (clu3bot)
 
 <img src=img/img6.png align=center alt=banner />
 
@@ -42,7 +42,7 @@ This tool compiles 4 different attack modes for Wireless Networks compiled with 
 ```
 ~ $ git clone https://github.com/clu3bot/OWT.git
 ~ $ cd OWT
-~ $ sudo bash OWT
+~ $ sudo bash owt.sh
 ```
 **Note: OWT requires root privileges**
 
