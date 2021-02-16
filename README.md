@@ -28,6 +28,11 @@ Offensive Wifi Toolkit (OWT)
 This tool compiles 4 different attack modes for Wifi Networks compiled with a U.I for easy use.
 </p>
     
+   <p align="center">
+    <a href="">
+    <img src="https://img.shields.io/badge/OWT-version%201.10-orange?style=for-the-badge&logo=appveyor?logo=data:none" />
+    </a>
+   </p> 
 # Installation & Running the script
 ```
 ~ $ git clone https://github.com/clu3bot/OWT.git
