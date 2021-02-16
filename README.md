@@ -34,6 +34,11 @@ This tool compiles 4 different attack modes for Wifi Networks compiled with a U.
     </a>
    </p> 
    
+   
+   
+   
+   
+   
 # Installation & Running the script
 ```
 ~ $ git clone https://github.com/clu3bot/OWT.git
