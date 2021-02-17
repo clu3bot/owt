@@ -49,40 +49,20 @@ echo -e "${YELLOW} \n         Offensive Wifi Toolkit (${filename})"
 echo -e "${LBLUE}\n     Created by ${creator}"
 echo -e "${LBLUE}                 Version ${version}${NONE}"
 echo -e "${YELLOW}\n                     ...${NONE} "
-
 #Sleeps for 2 seconds
 sleep 2
 clear
-
-#choose an interface to work with
-chooseInt () {
-clear
-cd /sys/class/net || exit 1
-echo -e "${LRED}Select You interface${NONE}"
-select networkname in *; do
-echo -e "${LRED}Chosen ${NONE}[${LBLUE}$networkname${NONE}]"
-sleep 0.8
-break;
-done
-iwdev=$networkname
-sleep 0.5
-
-#checks lo
-if [ "$networkname" == "lo" ]; then
-echo -e "${NONE}[${LBLUE}lo${NONE}] ${LRED} is not valid..${NONE}"
-sleep 1.25
-chooseInt
-fi
-}
-
-#calls choose interface function
-chooseInt
 #
-clear
-#print intro 2 
+#print intro 2
 ewr  "${LRED}Welcome To Offensive Wifi Toolkit${NONE}\n"
 ewr  "${LGREEN}*********************************************${NONE}"
 ewr  "${YELLOW}These tools are meant for use on networks you own\nHack at your own risk\n${NONE}"
+for dev in /sys/class/net/*; do
+    if [ -e "$dev"/wireless ]; then
+        iwdev=${dev##*/};
+        break;
+    fi
+done
 mode=$(iwconfig "$iwdev" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 ewr "[${LRED}Interface${NONE}] ${LBLUE}${iwdev}${NONE}"
 dn=$(lsb_release -is)
@@ -108,7 +88,12 @@ fi
 clear
 echo -e "${LRED}All Packages have been installed successfully${NONE}"
 echo -e "${LGREEN}*********************************************${NONE}"
-
+for dev in /sys/class/net/*; do
+    if [ -e "$dev"/wireless ]; then
+        iwdev=${dev##*/};
+        break;
+    fi
+done
 mode=$(iwconfig "$iwdev" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
 Mod=Monitor
@@ -139,6 +124,13 @@ mainMenu
 
 mainMenu () {
 clear
+for dev in /sys/class/net/*; do
+    if [ -e "$dev"/wireless ]; then
+        iwdev=${dev##*/};
+        break;
+    fi
+done
+
 mode=$(iwconfig "$iwdev" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 
 if [ "$mode" ==  "Monitor" ]; then
@@ -151,17 +143,16 @@ fi
 	ewr "${LGREEN}*****************${NONE}"
 	ewr "[${LBLUE}General${NONE}]"
 	ewr "${YELLOW}0]Exit"
-	ewr "${YELLOW}1]Choose another interface (supports wifi adapters)"
-	ewr "${YELLOW}2]Main Menu"
-	ewr "${YELLOW}3]Put Device in Monitor Mode"
-	ewr "${YELLOW}4]Put Device in Managed Mode"
-	ewr "${YELLOW}5]Scan Networks"
+	ewr "${YELLOW}1]Main Menu"
+	ewr "${YELLOW}2]Put Device in Monitor Mode"
+	ewr "${YELLOW}3]Put Device in Managed Mode"
+	ewr "${YELLOW}4]Scan Networks"
 	ewr "${LGREEN}*****************${NONE}"
 	ewr "[${LBLUE}Wifi Attacks${NONE}]"
-	ewr "${YELLOW}6]Wifi Attack Menu${NONE}"
+	ewr "${YELLOW}5]Wifi Attack Menu${NONE}"
 	ewr "${LGREEN}*****************${NONE}"
 	ewr "[${LBLUE}Other${NONE}]"
-	ewr "${YELLOW}7]About"
+	ewr "${YELLOW}6]About"
 	ewr "${LGREEN}*****************${NONE}"
 while true; do
 ewr "\n${LRED}Select an option:${NONE}"
@@ -175,29 +166,25 @@ case $option in
      ;;
   1) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
      read -p  "Are you sure? Press Enter.."
-     chooseInt
-     ;;
-  2) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
-     read -p  "Are you sure? Press Enter.."
      mainMenu
      ;;
-  3) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  2) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
      read -p "Are you sure? Press Enter.."
      monitorMode
      ;;
-  4) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  3) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
      read -p "Are you sure? Press Enter.."
      managedMode
      ;;
-  5) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  4) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
      read -p "Are you sure? Press Enter.."
      scanNetworks
      ;;
-  6) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  5) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
      read -p "Are you sure? Press Enter.."
      wifiAttacks
      ;;
-  7) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  6) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
      read -p "Are you sure? Press Enter.."
      abouT
      ;;
@@ -270,21 +257,6 @@ clear
 	mainMenu
 }
 
-#choose an new interface to work with \\\ from the options and menu and returns to the op$
-chooseInt () {
-clear
-cd /sys/class/net || exit 1
-echo -e "${LRED}Select You interface${NONE}"
-select networkname in *; do
-echo -e "${LRED}Chosen ${NONE}[${LBLUE}$networkname${NONE}]"
-sleep 0.8
-break;
-done
-iwdev=$networkname
-sleep 0.5
-clear
-mainMenu
-}
 
 #about page menu
 abouT () {
@@ -559,4 +531,3 @@ terminatioN
 }
 
 OWT
-
