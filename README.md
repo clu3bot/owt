@@ -73,7 +73,8 @@ This tool compiles 4 different attack modes for Wireless Networks compiled with 
 * ***OWT tool will prompt the user to download these dependencies if they arent installed.***
 
 # In The Works
-owt currently has complications when it comes to using usb wifi adapters. This will be fixed in owt v. 1.3.0
+owt currently has complications when it comes to using USB WiFi adapters. This will be fixed in owt v. 1.2.0.
+v 1.2.0 will also include numerous U.I. changes, further making the utility more user friendly. 
 
 
 # History
