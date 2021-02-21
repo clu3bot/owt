@@ -72,6 +72,10 @@ This tool compiles 4 different attack modes for Wireless Networks compiled with 
 * mdk3
 * ***OWT tool will prompt the user to download these dependencies if they arent installed.***
 
+# In The Works
+owt currently has complications when it comes to using usb wifi adapters. This will be fixed in owt v. 1.3.0
+
+
 # History
 **owt version history can be found here**
 * [Versions](https://github.com/clu3bot/owt/wiki/Versions)
