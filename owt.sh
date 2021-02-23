@@ -1,5 +1,5 @@
 #!/bin/bash
-#Offensive Wifi Toolkit (owt)
+#Offensive Wifi Toolkit (owt) test
 #Project start date (Feb. 8 2021)
 #Created By Brennan Mccown (clu3bot)
 #Version 1.1.0
