@@ -5,7 +5,6 @@
 #Version 1.1.0
 #GPL v3.0 License
 #
-
 #colors vars
 LBLUE='\033[1;34m'
 LRED='\033[1;31m'
