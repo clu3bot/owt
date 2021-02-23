@@ -37,7 +37,7 @@ check_for_updates () {
 
 ewr "${YELLOW}Check for updates to owt tool${NONE}"
 read -p "Press Enter to Continue.."
-while [ `git pull > git.txt` ]; do
+while [ `git stash --include-untracked | git reset --hard | git pull > git.txt` ]; do
 ewr "${NONE}[${LRED}Checking for updates to owt tool${NONE}]"
 ewr "\n${LBLUE}Please wait..${NONE}"
 done;
