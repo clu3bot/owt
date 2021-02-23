@@ -33,6 +33,26 @@ ewr() {
     echo -e "$@"
 }
 
+check_for_updates () {
+
+ewr "${YELLOW}Check for updates to owt tool${NONE}"
+read -p "Press Enter to Continue.."
+while [ `git pull > git.txt` ]; do
+ewr "${NONE}[${LRED}Checking for updates to owt tool${NONE}]"
+ewr "\n${LBLUE}Please wait..${NONE}"
+done;
+if grep "Already" git.txt; then
+ewr "${LRED}owt is already up to date!${NONE}"
+rm -rf git.txt
+sleep 0.2
+else
+ewr "${LRED}owt has been updated. Restart script for changes to take place.${NONE}"
+sleep 1
+rm -rf git.txt
+exit
+fi
+}
+
 #prints intro 1
 intro_1 () {
 echo -e "${LRED}
@@ -49,6 +69,9 @@ echo -e "${YELLOW} \n         Offensive Wifi Toolkit (${filename})"
 echo -e "${LBLUE}\n     Created by ${creator}"
 echo -e "${LBLUE}                 Version ${version}${NONE}"
 echo -e "${YELLOW}\n                     ...${NONE} "
+sleep 1.5
+clear
+check_for_updates
 }
 
 #calls intro 1
