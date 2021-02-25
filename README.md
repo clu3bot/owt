@@ -73,9 +73,7 @@ This tool compiles 4 different attack modes for basic Wireless Network hacking c
 * ***OWT tool will prompt the user to download these dependencies if they arent installed.***
 
 # In The Works
-owt currently has complications when it comes to using USB WiFi adapters. This will be fixed in owt v. 1.2.0.
-v 1.2.0 will also include numerous U.I. changes, further making the utility more user friendly. 
-
+Version 1.3 will change how owt handles processes. It will make various processes run as background processes to improve preformance.
 
 # History
 **owt version history can be found here**
