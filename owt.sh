@@ -129,6 +129,7 @@ fi
 ewr "[${LRED}Permission Status${NONE}] ${LBLUE}${perm}${NONE}\n"
 ewr "${YELLOW}Restart owt by using ${LRED}sudo bash owt.sh${NONE}"
 ewr "\n${RED}Now exiting the script..${NONE}"
+sleep 0.8
 exit
 else
 sleep 0.1
