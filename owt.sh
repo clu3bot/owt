@@ -258,7 +258,7 @@ else
 fi
         echo -e "${NONE}[${LRED}Scaning for Networks${NONE}]"
 
-                trap "airmon-ng stop wlan0mon > /dev/null;rm otp-01.csv 2> /dev/null" EXIT
+                trap "airmon-ng stop $iface > /dev/null;rm otp-01.csv 2> /dev/null" EXIT
                 xterm -e airodump-ng --output-format csv -w otp $iface > /dev/null & sleep 10 ; kill $!
         sed -i '1d' otp-01.csv
 kill %1
