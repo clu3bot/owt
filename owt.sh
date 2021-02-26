@@ -53,6 +53,17 @@ exit
 fi
 }
 
+check_for_connect () {
+if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+  check_for_updates
+else
+  ewr "${LRED}Could not Check for Updates ${NONE}:${RED} No Internet Connection${NONE}"
+  sleep 1.5
+  ewr "${LGREEN}Skipping Updates..${NONE}"
+  sleep 1.7
+fi
+}
+
 #prints intro 1
 intro_1 () {
 echo -e "${LRED}
@@ -71,7 +82,7 @@ echo -e "${LBLUE}                 Version ${version}${NONE}"
 echo -e "${YELLOW}\n                     ...${NONE} "
 sleep 1.5
 clear
-check_for_updates
+check_for_connect
 }
 
 #calls intro 1
