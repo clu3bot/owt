@@ -44,7 +44,7 @@ This tool compiles 4 different attack modes for basic Wireless Network hacking c
 ~ $ cd owt
 ~ $ sudo bash owt.sh
 ```
-**Note: OWT requires root privileges**
+**Note: owt requires root privileges**
 
 # Useage
 > When the script is run the first thing the user will see is the Intro page. It will prompt the user to press Enter which will then automatically check for dependant packages. 
