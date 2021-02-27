@@ -82,7 +82,7 @@ echo -e "${LBLUE}                 Version ${version}${NONE}"
 echo -e "${YELLOW}\n                     ...${NONE} "
 sleep 1.5
 clear
-check_for_connect
+#check_for_connect
 }
 
 #calls intro 1
@@ -172,6 +172,16 @@ done
 #calls check dependencies
 check_dependencies
 
+ecmonm() {
+clear
+echo -e "${LGREEN}Putting Device in Monitor Mode${NONE}"
+}
+
+ecmanm() {
+clear
+echo -e "${LGREEN}Putting Device in Managed Mode${NONE}"
+}
+
 #checks if device is in monitor mode if not prompts the user to put device in monitor mode
 check_monitor_mode () {
 clear
@@ -192,11 +202,11 @@ else
 	read -r re
 fi
 if [[ "$re" == ["yY"]* ]]; then
-        ! sudo ifconfig $iface up
-        echo -e "${YELLOW}${iface} is enabled${LRED}"
-        sudo airmon-ng start $iface;
+        ecmonm &
+	ifconfig $iface up
+	sleep 0.1
+	airmon-ng start $iface
 fi
-
 }
 #calls check monitor mode
 check_monitor_mode
@@ -204,7 +214,7 @@ check_monitor_mode
 
 #puts interface in monitor mode
 monitor_mode () {
-clear
+ecmonm
 airmon-ng check kill
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
 mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
@@ -215,10 +225,10 @@ Mod=Managed
 fi
 if [ "$Mod" == "Monitor" ]; then
 clear
-        echo -e "${LRED}Device already in $mon mode ${NONE}"
+echo -e "${LRED}Device already in $mon mode ${NONE}"
 sleep 0.5
 main_menu
-else   
+else
 sudo airmon-ng start $iface
 clear
 echo -e "${LRED}Device now in $mon Mode${NONE}"
@@ -228,7 +238,7 @@ fi
 
 #puts interface in managed mode
 managed_mode () {
-clear
+ecmanm &
 service network-manager start
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
 mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
@@ -239,7 +249,7 @@ Mod=Monitor
 fi
 if [ "$Mod" == "Managed" ]; then
 clear
-        echo -e "${LRED}Device already in $man mode ${NONE}"
+echo -e "${LRED}Device already in $man mode ${NONE}"
 sleep 0.5
 main_menu
 else
@@ -481,7 +491,7 @@ else
 fi
         echo -e "${NONE}[${LRED}Scaning for Networks${NONE}]"
         
-                trap "airmon-ng stop wlan0mon > /dev/null;rm otp-01.csv 2> /dev/null" EXIT
+                trap "airmon-ng stop $iface > /dev/null;rm otp-01.csv 2> /dev/null" EXIT
                 xterm -e airodump-ng --output-format csv -w otp $iface > /dev/null & sleep 10 ; kill $!
         sed -i '1d' otp-01.csv
 kill %1
@@ -640,3 +650,4 @@ termination
 }
 
 OWT
+
