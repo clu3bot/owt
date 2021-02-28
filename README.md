@@ -73,7 +73,7 @@ This tool compiles 4 different attack modes for basic Wireless Network hacking c
 * ***OWT tool will prompt the user to download these dependencies if they arent installed.***
 
 # In The Works
-Version 1.3 will change how owt handles processes. It will make various jobs run as background processes to improve preformance.
+Version 1.3 will change how owt handles processes. This update will make various jobs run as background processes to improve preformance.
 
 # History
 **owt version history can be found here**
