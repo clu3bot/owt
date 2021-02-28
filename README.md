@@ -79,7 +79,7 @@ Version 1.3 will change how owt handles processes. It will make various jobs run
 **owt version history can be found here**
 * [Versions](https://github.com/clu3bot/owt/wiki/Versions)
 
-**Stable Releases Source Code**
+**stable releases source code**
 * [Releases](https://github.com/clu3bot/owt/releases)
 
 # Notice
