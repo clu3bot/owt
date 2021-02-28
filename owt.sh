@@ -2,7 +2,7 @@
 #Offensive Wifi Toolkit (owt) 
 #Project start date (Feb. 8 2021)
 #Created By Brennan Mccown (clu3bot)
-#Version 1.2.3
+#Version 1.2.4
 #GPL v3.0 License
 #
 #colors vars
