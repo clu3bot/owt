@@ -82,7 +82,7 @@ echo -e "${LBLUE}                 Version ${version}${NONE}"
 echo -e "${YELLOW}\n                     ...${NONE} "
 sleep 1.5
 clear
-#check_for_connect
+check_for_connect
 }
 
 #calls intro 1
