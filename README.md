@@ -82,6 +82,10 @@ Version 1.3 will change how owt handles processes. This update will make various
 **stable releases source code**
 * [Releases](https://github.com/clu3bot/owt/releases)
 
+
+# All Resources 
+
+
 # Notice
 
 This script is intended to be used on networks you own. Don't use this script maliciously. You are responsible for your own actions.
