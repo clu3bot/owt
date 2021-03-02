@@ -46,7 +46,9 @@ This tool compiles 4 different attack modes for basic Wireless Network hacking c
 ```
 **Note: owt requires root privileges**
 
-# Useage
+# Usage
+**Detailed How-to of owt can be found here**
+* [Usage](https://github.com/clu3bot/owt/wiki/Usage)
 
 # Dependencies 
 * aircrack-ng 
