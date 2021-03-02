@@ -47,25 +47,6 @@ This tool compiles 4 different attack modes for basic Wireless Network hacking c
 **Note: owt requires root privileges**
 
 # Useage
-> When the script is run the first thing the user will see is the Intro page. It will prompt the user to press Enter which will then automatically check for dependant packages. 
-
-![img1](img/img1.png)
-
-> Then the script will check if the user is in Monitor or Managed mode and then prompt the user to put device in Monitor mode if need be.
-
-![img2](img/img2.png)
-
-> Next the script will print the Main Menu page where the user can select from 6 options.
-
-![img3](img/img3.png)
-
-> From the Main Menu page the user can then scan for a Network to attack (This is required for WIDS/WIPS confusion & AP Probe attack. If you don't scan networks before using either of those attacks the script will prompt you to do so when trying to use them.)
-
-![img4](img/img4.png)
-
-> Option 5 on the Main Menu is Wifi Attacks. Selecting this will bring the user to the Wifi attacks menu.
-
-![img5](img/img5.png)
 
 # Dependencies 
 * aircrack-ng 
