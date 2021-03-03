@@ -2,13 +2,13 @@
 #Offensive Wifi Toolkit (owt) 
 #Project start date (Feb. 8 2021)
 #Created By Brennan Mccown (clu3bot)
-#Version 2.1.1
+#Version 2.0.0
 #GPL v3.0 License
-#
+
 #colors vars
 LBLUE='\033[1;34m'
 LRED='\033[1;31m'
-LGREEN='\033[1;32m'
+LGREEN='\033[1;35m'
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NONE='\033[0m'
@@ -18,7 +18,7 @@ NONE='\033[0m'
 S=1000
 mon=Monitor
 man=Managed
-version="2.1.1"
+version="2.0.0"
 language="English"
 #user="clu3bot"
 github="https://github.com/clu3bot/"
@@ -57,7 +57,7 @@ fi
 skip_updates () {
   clear
   ewr "${LGREEN}Skipping Updates..${NONE}"
-  sleep 1
+  sleep 0.4
 
 }
 
@@ -128,7 +128,7 @@ check_for_root () {
 intro_2 () {
 check_for_root 
 ewr  "${LRED}Welcome To Offensive Wifi Toolkit${NONE}\n"
-ewr  "${LGREEN}*********************************************${NONE}"
+ewr  "${LGREEN}-------------------------------------------------${NONE}"
 ewr  "${YELLOW}These tools are meant for use on networks you own\nHack at your own risk\n${NONE}"
 
 if [ "$check" = "true" ]; then
@@ -141,8 +141,8 @@ iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
 mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 ewr "[${LRED}Interface${NONE}] ${LBLUE}${iface}${NONE}"
 dn=$(lsb_release -is)
-ewr "[${LRED}Distribution${NONE}] ${LBLUE}${dn}${NONE}"
-ewr "${LGREEN}*********************************************${NONE}"
+ewr "[${LRED}Distribution${NONE}] ${LBLUE}${dn}${NONE}\n"
+ewr "${LGREEN}-------------------------------------------------${NONE}"
 ewr "${LBLUE}Check if all necessary packages are installed${NONE}"
 read -r -p "Press Enter to Continue.."
 }
@@ -218,7 +218,7 @@ fi
 check_monitor_mode () {
 clear
 echo -e "${LRED}All Packages have been installed successfully${NONE}"
-echo -e "${LGREEN}*********************************************${NONE}"
+echo -e "${LGREEN}---------------------------------------------${NONE}"
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
 mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
@@ -306,7 +306,7 @@ if [ "$Mod" == "Monitor" ]; then
         sleep 0.1
 else
         echo -e "${LRED}This tool requires Monitor Mode${NONE}"
-        read -r -p "Press Enter to continue to Main Menu"
+        read -r -p "Press Enter to return to Main Menu"
                 main_menu
 fi
         scan_animation & 
@@ -335,14 +335,14 @@ about_page () {
 clear
 
 	ewr "${LRED}About${NONE}"
-	ewr "${LGREEN}********************************${NONE}"
+	ewr "${LGREEN}--------------------------------${NONE}"
 	ewr "${YELLOW}Creator${NONE}:${YELLOW}$creator${NONE}"
 	ewr "${YELLOW}Github${NONE}:${YELLOW}$github${NONE}"
 	ewr "${YELLOW}Language${NONE}:${YELLOW}$language${NONE}"
 	ewr "${YELLOW}Version${NONE}:${YELLOW} $version${NONE}"
 	ewr "${YELLOW}Filename${NONE}:${YELLOW}$filename${NONE}"
 	ewr "${YELLOW}Contact${NONE}:${YELLOW}$contactinfo${NONE}"
-	ewr "${LGREEN}********************************${NONE}"
+	ewr "${LGREEN}--------------------------------${NONE}"
 	ewr "${LRED}Press 1 for Main Menu${NONE}"
 }
 
@@ -352,48 +352,46 @@ clear
 mode_vars
 check_mode
 	ewr "\n${NONE}[${LRED}Interface${NONE}]${LBLUE} ${iface}${NONE}   [${LRED}Mode${NONE}]${LBLUE} ${Mod}${NONE}   [${LRED}Target Network${NONE}]${LBLUE} ${nn}${NONE}\n"
-	ewr "${LGREEN}*****************${NONE}"
-	ewr "[${LBLUE}General${NONE}]"
-	ewr "${YELLOW}0]Main Menu"
-	ewr "${LGREEN}*****************${NONE}"
-	ewr "[${LBLUE}Wifi Attacks${NONE}]"
-	ewr "${YELLOW}1]Beacon Flood Attack"
-	ewr "${YELLOW}2]Deauth/Jamming Attack"
-	ewr "${YELLOW}3]Basic AP Probe"
-	ewr "${YELLOW}4]WIDS/WIPS Confusion Attack"
-	ewr "${YELLOW}5]Michael Shutdown Exploitation"
-        ewr "${YELLOW}6]Authentication DoS Attack (AP Freeze)"
-        ewr "${LGREEN}*****************${NONE}"
+	ewr "${LGREEN}----------${NONE}[${LBLUE}General${NONE}]${LGREEN}---------\n"
+	ewr "${YELLOW}0] Main Menu\n"
+	ewr "${LGREEN}-------${NONE}[${LBLUE}Wifi Attacks${NONE}]${LGREEN}-------\n"
+	ewr "${YELLOW}1${NONE}] ${YELLOW}Beacon Flood Attack"
+	ewr "${YELLOW}2${NONE}] ${YELLOW}Deauth/Jamming Attack"
+	ewr "${YELLOW}3${NONE}] ${YELLOW}Basic AP Probe"
+	ewr "${YELLOW}4${NONE}] ${YELLOW}WIDS/WIPS Confusion Attack"
+	ewr "${YELLOW}5${NONE}] ${YELLOW}Michael Shutdown Exploitation"
+        ewr "${YELLOW}6${NONE}] ${YELLOW}Authentication DoS Attack (AP Freeze)\n"
+        ewr "${LGREEN}---------------------------${NONE}"
 while true; do
 echo -e "${LRED}Select an option:${NONE}"
 read -r -p "$(tput setaf 7)" option
 case $option in  
 
-  0) echo -e "\n${NONE}${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
+  0) echo -e "\n${NONE}${YELLOW}Selected${NONE}»${NONE} [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      main_menu
      ;;
-  1) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
+  1) echo -e "\n${YELLOW}Selected${NONE}»${NONE} [${YELLOW}$option${NONE}]"
      read -r -p  "Are you sure? Press Enter.."
      beacon_flood_attack
      ;;
-  2) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
+  2) echo -e "\n${YELLOW}Selected${NONE}»${NONE} [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      deauth_attack
      ;;
-  3) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
+  3) echo -e "\n${YELLOW}Selected${NONE}»${NONE} [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      probe_attack
      ;;
-  4) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
+  4) echo -e "\n${YELLOW}Selected${NONE}»${NONE} [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      confusion_attack
      ;;
-  5) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
+  5) echo -e "\n${YELLOW}Selected${NONE}»${NONE} [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      michael_shutdown
      ;;
-  6) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
+  6) echo -e "\n${YELLOW}Selected${NONE}»${NONE} [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      authentication_dos
      ;;
@@ -565,7 +563,7 @@ if [ "$Mod" == "Monitor" ]; then
         sleep 0.1
 else
         echo -e "${LRED}This tool requires Monitor Mode${NONE}"
-        read -r -p "Press Enter to continue to Main Menu"
+        read -r -p "Press Enter to return to Main Menu"
                 main_menu
 fi
         scan_animation &
@@ -702,52 +700,49 @@ else
 Mod=Managed
 fi
 	ewr "\n${NONE}[${LRED}Interface${NONE}]${LBLUE} ${iface}${NONE}   [${LRED}Mode${NONE}]${LBLUE} ${Mod}${NONE}   [${LRED}Target Network${NONE}]${LBLUE} ${nn}${NONE}\n"
-	ewr "\n${NONE}[${LRED}Options${NONE}]"
-	ewr "${LGREEN}*****************${NONE}"
-	ewr "[${LBLUE}General${NONE}]"
-	ewr "${YELLOW}0]Exit"
-	ewr "${YELLOW}1]Main Menu"
-	ewr "${YELLOW}2]Put Device in Monitor Mode"
-	ewr "${YELLOW}3]Put Device in Managed Mode"
-	ewr "${YELLOW}4]Scan Networks"
-	ewr "${LGREEN}*****************${NONE}"
-	ewr "[${LBLUE}Wifi Attacks${NONE}]"
-	ewr "${YELLOW}5]Wifi Attack Menu${NONE}"
-	ewr "${LGREEN}*****************${NONE}"
-	ewr "[${LBLUE}Other${NONE}]"
-	ewr "${YELLOW}6]About"
-	ewr "${LGREEN}*****************${NONE}"
+	ewr "\n${NONE}[${LRED}Options${NONE}]\n"
+	ewr "${LGREEN}---------${NONE}[${LBLUE}General${NONE}]${LGREEN}----------\n"
+	ewr "${YELLOW}0${NONE}] ${YELLOW}Exit"
+	ewr "${YELLOW}1${NONE}] ${YELLOW}Main Menu"
+	ewr "${YELLOW}2${NONE}] ${YELLOW}Put Device in Monitor Mode"
+	ewr "${YELLOW}3${NONE}] ${YELLOW}Put Device in Managed Mode"
+	ewr "${YELLOW}4${NONE}] ${YELLOW}Scan Networks\n"
+	ewr "${LGREEN}-------${NONE}[${LBLUE}Wifi Attacks${NONE}]${LGREEN}-------\n"
+	ewr "${YELLOW}5${NONE}] ${YELLOW}Wifi Attack Menu${NONE}\n"
+	ewr "${LGREEN}----------${NONE}[${LBLUE}Other${NONE}]${LGREEN}-----------\n"
+	ewr "${YELLOW}6${NONE}] ${YELLOW}About\n"
+	ewr "${LGREEN}----------------------------${NONE}"
 while true; do
 ewr "\n${LRED}Select an option:${NONE}"
 read -r -p "$(tput setaf 7)" option
 case $option in  
 
-  0) echo -e "\n${NONE}${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  0) echo -e "\n${NONE}${YELLOW}Selected${NONE}» [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
 	clear
      exit 0
      ;;
-  1) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  1) echo -e "\n${YELLOW}Selected${NONE}» [${YELLOW}$option${NONE}]"
      read -r -p  "Are you sure? Press Enter.."
      main_menu
      ;;
-  2) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  2) echo -e "\n${YELLOW}Selected${NONE}» [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      monitor_mode
      ;;
-  3) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  3) echo -e "\n${YELLOW}Selected${NONE}» [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
-     managed_mode
+     managed_mode 
      ;;
-  4) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  4) echo -e "\n${YELLOW}Selected${NONE}» [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      scan_networks
      ;;
-  5) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  5) echo -e "\n${YELLOW}Selected${NONE}» [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      wifi_attacks_menu
      ;;
-  6) echo -e "\n${YELLOW}Selected${NONE} [${YELLOW}$option${NONE}]"
+  6) echo -e "\n${YELLOW}Selected${NONE}» [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      about_page
      ;;
