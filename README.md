@@ -69,8 +69,10 @@ Making a windows version of owt.
 
 
 # All Resources 
-
-
+* **Contact me** [here](https://github.com/clu3bot/owt/wiki/Contact)
+* **Tutorial for owt** [here](https://github.com/clu3bot/owt/wiki/Usage)
+* **owt wiki** [here](https://github.com/clu3bot/owt/wiki/)
+* **Updates/Versions history** [here](https://github.com/clu3bot/owt/wiki/Versions)
 # Notice
 
 This script is intended to be used on networks you own. Don't use this script maliciously. You are responsible for your own actions.
