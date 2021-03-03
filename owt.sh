@@ -35,8 +35,7 @@ ewr() {
 
 check_for_updates () {
 
-ewr "${YELLOW}Check for updates to owt tool${NONE}"
-read -r -p "Press Enter to Continue.."
+ewr "${YELLOW}Checking for updates${NONE}"
 while [ "$(git stash --include-untracked | git reset --hard | git pull https://github.com/clu3bot/owt.git > git.txt)" ]; do
 ewr "${NONE}[${LRED}Checking for updates to owt tool${NONE}]"
 ewr "\n${LBLUE}Please wait..${NONE}"
@@ -51,6 +50,15 @@ sleep 1
 rm -rf git.txt
 exit
 fi
+
+
+}
+
+skip_updates () {
+  clear
+  ewr "${LGREEN}Skipping Updates..${NONE}"
+  sleep 1
+
 }
 
 check_for_connect () {
@@ -62,6 +70,18 @@ else
   ewr "${LGREEN}Skipping Updates..${NONE}"
   sleep 1.7
 fi
+}
+
+ask_for_updates () {
+clear
+echo -e "${LGREEN}The script may have updates available\n${LRED}${d}\n${LBLUE}Would you like to check for them now? (Y/N)"
+read -r re 
+if [[ "$re" == ["yY"]* ]]; then
+        check_for_connect;
+else
+        skip_updates
+fi
+
 }
 
 #prints intro 1
@@ -82,7 +102,7 @@ echo -e "${LBLUE}                 Version ${version}${NONE}"
 echo -e "${YELLOW}\n                     ...${NONE} "
 sleep 1.5
 clear
-check_for_connect
+ask_for_updates
 }
 
 #calls intro 1
@@ -161,7 +181,7 @@ dependencies=(aircrack-ng mdk3)
 for d in "${dependencies[*]}"; do
 if [ "$(dpkg-query -W -f='${Status}' "$d" 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
 	echo -e "${LBLUE}The following packages must be installed for the script to run...\n${LRED}${d}\n${LBLUE}Would you like to install them now? (Y/N)"
-read -r -p 
+read -r r 
 if [[ "$r" == ["yY"]* ]]; then
 	sudo apt-get install "$d";
 fi
