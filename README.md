@@ -5,22 +5,22 @@ Offensive Wifi Toolkit (owt) created by Brennan Mccown (clu3bot)
 
 </p>
 <p align="center">
-    <a href="">
+    <a href="https://github.com/clu3bot/owt">
       <img src="https://img.shields.io/maintenance/yes/2021" />
     </a>
-    <a href="">
+    <a href="https://github.com/clu3bot/owt/issues">
       <img src="https://img.shields.io/github/issues/clu3bot/owt" />
     </a>
-    <a href="">
+    <a href="https://github.com/clu3bot/owt">
       <img src="https://img.shields.io/github/license/clu3bot/owt" />
     </a>
-    <a href="">
+    <a href="https://github.com/clu3bot/owt">
       <img src="https://img.shields.io/github/stars/clu3bot/owt" />
     </a>
-    <a href="">
+    <a href="https://github.com/clu3bot/owt">
       <img src="https://img.shields.io/github/forks/clu3bot/owt" />
     </a>  
-    <a href="">
+    <a href="https://github.com/clu3bot/owt">
       <img src="https://img.shields.io/github/repo-size/clu3bot/owt" />
     </a>
 <p align="center">  
