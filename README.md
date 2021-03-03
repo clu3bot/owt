@@ -41,7 +41,7 @@ This tool compiles 6 different attack modes for basic Wireless Network hacking c
 ```
 **Note: owt requires root privileges**
 
-![image](/img/image1.png/)
+![image](/img/image11.png/)
 
 # Usage
 **Detailed How-to of owt can be found here**
