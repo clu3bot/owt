@@ -17,7 +17,7 @@ Offensive Wifi Toolkit (owt) created by Brennan Mccown (clu3bot)
     <a href="https://github.com/clu3bot/owt/stargazers">
       <img src="https://img.shields.io/github/stars/clu3bot/owt" />
     </a>
-    <a href="https://github.com/clu3bot/owt">
+    <a href="https://github.com/clu3bot/owt/network/members">
       <img src="https://img.shields.io/github/forks/clu3bot/owt" />
     </a>  
     <a href="https://github.com/clu3bot/owt">
