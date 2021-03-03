@@ -24,7 +24,7 @@ Offensive Wifi Toolkit (owt) created by Brennan Mccown (clu3bot)
       <img src="https://img.shields.io/github/repo-size/clu3bot/owt" />
     </a>
 <p align="center">  
-This tool compiles 4 different attack modes for basic Wireless Network hacking combined with a U.I. for easy use.
+This tool compiles 6 different attack modes for basic Wireless Network hacking combined with a U.I. for easy use all compacted in a minimal file size.
 </p>
     
    <p align="center">
@@ -32,11 +32,6 @@ This tool compiles 4 different attack modes for basic Wireless Network hacking c
     <img src="https://img.shields.io/badge/OWT-version%201.2.4-orange?style=for-the-badge&logo=appveyor?logo=data:none" />
     </a>
    </p> 
-   
-   
-   
-   
-   
    
 # Installation & Running the script
 ```
