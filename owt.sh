@@ -180,6 +180,8 @@ permissions_prompt
 dependencies=(aircrack-ng mdk3)
 for d in "${dependencies[*]}"; do
 if [ "$(dpkg-query -W -f='${Status}' "$d" 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
+sleep 0.1
+else
 	echo -e "${LBLUE}The following packages must be installed for the script to run...\n${LRED}${d}\n${LBLUE}Would you like to install them now? (Y/N)"
 read -r r 
 if [[ "$r" == ["yY"]* ]]; then
