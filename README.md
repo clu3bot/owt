@@ -29,7 +29,7 @@ This tool compiles 6 different attack modes for basic Wireless Network hacking c
     
    <p align="center">
     <a href="">
-    <img src="https://img.shields.io/badge/OWT-version%202.0.0-orange?style=for-the-badge&logo=appveyor?logo=data:none" />
+    <img src="https://img.shields.io/badge/OWT-version%202.1.0-orange?style=for-the-badge&logo=appveyor?logo=data:none" />
     </a>
    </p> 
    
