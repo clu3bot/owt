@@ -2,9 +2,9 @@
 #Offensive Wifi Toolkit (owt) 
 #Project start date (Feb. 8 2021)
 #Created By Brennan Mccown (clu3bot)
-#Version 2.1.2
+#Version 2.0.0
 #GPL v3.0 License
-
+#
 #colors vars
 LBLUE='\033[1;34m'
 LRED='\033[1;31m'
@@ -18,7 +18,7 @@ NONE='\033[0m'
 S=1000
 mon=Monitor
 man=Managed
-version="2.1.2"
+version="2.1.3"
 language="English"
 #user="clu3bot"
 github="https://github.com/clu3bot/"
@@ -167,25 +167,16 @@ sleep 0.1
 fi
 }
 
-#checks perms
-permissions_prompt
-#calls intro 2
-intro_2
-#
-clear
-
 #checks for dependent packages
 check_dependencies () {
 permissions_prompt
 dependencies=(aircrack-ng mdk3)
 for d in "${dependencies[*]}"; do
-if [ "$(dpkg-query -W -f='${Status}' "$d" 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
-sleep 0.1
-else
+if [ "$(dpkg-query -W -f='${Status}' $d 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
 	echo -e "${LBLUE}The following packages must be installed for the script to run...\n${LRED}${d}\n${LBLUE}Would you like to install them now? (Y/N)"
 read -r r 
 if [[ "$r" == ["yY"]* ]]; then
-	sudo apt-get install "$d";
+	sudo apt-get install $d;
 fi
 fi
 done
@@ -193,6 +184,14 @@ done
 
 #calls check dependencies
 check_dependencies
+
+#checks perms
+permissions_prompt
+#calls intro 2
+intro_2
+#
+clear
+
 
 ecmonm() {
 clear
@@ -217,8 +216,6 @@ fi
 #checks if device is in monitor mode if not prompts the user to put device in monitor mode
 check_monitor_mode () {
 clear
-echo -e "${LRED}All Packages have been installed successfully${NONE}"
-echo -e "${LGREEN}---------------------------------------------${NONE}"
 iface=$(airmon-ng | awk 'NR==4' | awk '{print $2}')
 mode=$(iwconfig "$iface" | sed -n '/Mode:/s/.*Mode://; s/ .*//p')
 if [ "$mode" ==  "Monitor" ]; then
