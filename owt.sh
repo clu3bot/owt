@@ -65,7 +65,7 @@ check_for_connect () {
 if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
   check_for_updates
 else
-  ewr "${LRED}Could not Check for Updates ${NONE}:${RED} No Internet Connection${NONE}"
+  ewr "${LRED}Could not Check for Updates ${NONE}:${RED} DNS could not be established. Please read help.txt for more iformation.${NONE}"
   sleep 1.5
   ewr "${LGREEN}Skipping Updates..${NONE}"
   sleep 1.7
@@ -151,14 +151,14 @@ read -r -p "Press Enter to Continue.."
 permissions_prompt () {
 check_for_root
 if [ "$check" = "false" ]; then
-ewr "${LRED}owt requires root permissions!\n${NONE}"
+ewr "${LRED}owt requires root permissions!${NONE}\n"
 if [ "$check" = "true" ]; then
 perm="User is root"
 else
 perm="User is not root"
 fi
 ewr "[${LRED}Permission Status${NONE}] ${LBLUE}${perm}${NONE}\n"
-ewr "${YELLOW}Restart owt by using ${LRED}sudo bash owt.sh${NONE}"
+ewr "${LBLUE}Restart owt by using ${LRED}sudo bash owt.sh${NONE}"
 ewr "\n${RED}Now exiting the script..${NONE}"
 sleep 0.8
 exit
