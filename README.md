@@ -53,8 +53,8 @@ This tool compiles 6 different attack modes for basic Wireless Network hacking c
 * ***OWT tool will prompt the user to download these dependencies if they arent installed.***
 
 # In The Works
-Making a windows version of owt. 
-
+* Making a windows version of owt. 
+* major U.I changes 
 # History
 **owt version history can be found here**
 * [Versions](https://github.com/clu3bot/owt/wiki/Versions)
