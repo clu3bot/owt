@@ -68,6 +68,8 @@ This tool compiles 6 different attack modes for basic Wireless Network hacking c
 * **Tutorial for owt** [here](https://github.com/clu3bot/owt/wiki/Usage)
 * **owt wiki** [here](https://github.com/clu3bot/owt/wiki/)
 * **Updates/Versions history** [here](https://github.com/clu3bot/owt/wiki/Versions)
+* **Help and Troubleshooting** [here](https://github.com/clu3bot/owt/wiki/Help)
+
 # Notice
 
 This script is intended to be used on networks you own. Don't use this script maliciously. You are responsible for your own actions.
