@@ -57,10 +57,10 @@ This tool compiles 6 different attack modes for basic Wireless Network hacking c
 * Major U.I changes 
 * Fixing the "issue" where owt doesn't support use within Virtual Machines. Not priority as this is a pain in the ass but has been requested :)
 # History
-**owt version history can be found here**
+**owt Version History can be found here**
 * [Versions](https://github.com/clu3bot/owt/wiki/Versions)
 
-**stable releases source code**
+**Stable Releases Source Code can be found here**
 * [Releases](https://github.com/clu3bot/owt/releases)
 
 
