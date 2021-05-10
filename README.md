@@ -50,6 +50,7 @@ This tool compiles 6 different attack modes for basic Wireless Network hacking c
 # Dependencies 
 * aircrack-ng 
 * mdk3
+* xterm
 * ***OWT tool will prompt the user to download these dependencies if they arent installed.***
 
 # In The Works
