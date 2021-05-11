@@ -54,9 +54,12 @@ This tool compiles 6 different attack modes for basic Wireless Network hacking c
 * ***OWT tool will prompt the user to download these dependencies if they arent installed.***
 
 # In The Works
+* Expanding owt from being just for wireless network attacking. More information below.
+* Adding more advanced functionality to owt such as NTP amplification attacks to screw with NTP servers for dosing websites. Adding AP tracking functionality and ability to save lists of common saved networks that people have in the area. I.E if there is a starbucks near by you can track if starbucks is a common AP that phones in the area have saved. This is useful for knowing which APs to spoof. Adding a method of saving text files of device names and mac-addresses on a newtwork. 
 * Making a windows version of owt. 
 * Major U.I changes 
 * Fixing the "issue" where owt doesn't support use within Virtual Machines. Not priority as this is a pain in the ass but has been requested :)
+
 # History
 **owt Version History can be found here**
 * [Versions](https://github.com/clu3bot/owt/wiki/Versions)
