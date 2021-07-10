@@ -58,7 +58,7 @@ This tool compiles some necessary tools for wifi auditing in a unix bash script 
 * aircrack-ng 
 * mdk3
 * xterm
-* ***OWT tool will prompt the user to download these dependencies if they arent installed.***
+* ***owt tool will prompt the user to download these dependencies if they arent installed.***
 
 # In The Works
 * Expanding owt from being just for wireless network attacking. More information below.
