@@ -47,6 +47,13 @@ This tool compiles some necessary tools for wifi auditing in a unix bash script 
 **Detailed How-to of owt can be found here**
 * [Usage](https://github.com/clu3bot/owt/wiki/Usage)
 
+# Troubleshooting
+**Troubleshoot.sh will detect possible problems you may have with owt
+```
+~ $ cd owt
+~ $ sudo bash troubleshoot.sh
+```
+
 # Dependencies 
 * aircrack-ng 
 * mdk3
