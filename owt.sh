@@ -182,6 +182,7 @@ check_iface() {
 #print second intro
 
 intro_2 () {
+clear
     check_for_root
         ewr  "${LRED}Welcome To Offensive Wifi Toolkit${NONE}\n"
             ewr  "${LGREEN}-------------------------------------------------${NONE}"
