@@ -227,7 +227,7 @@ permissions_prompt () {
 #downloads required dependencies
 package_function() {
     clear
-    echo -e "${LRED}Missing Dependencies: ${YELLOW}${d}"
+    echo -e "${LRED}You're Missing some or all of these Dependencies: ${YELLOW}${d}"
                 echo -e "${LBLUE}Download Dependencies?(Y/N)"
                 read -r r
 
