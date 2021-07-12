@@ -228,7 +228,7 @@ permissions_prompt () {
 package_function() {
     clear
     echo -e "${LRED}Missing Dependencies: ${YELLOW}${d}"
-                echo -e "${LBLUE}Downloads Dependencies?(Y/N)"
+                echo -e "${LBLUE}Download Dependencies?(Y/N)"
                 read -r r
 
                 if [[ "$r" == ["yY"]* ]]; then
