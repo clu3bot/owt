@@ -224,14 +224,11 @@ permissions_prompt () {
     fi
 }
 
-#checks for dependent packages and then gives the user the option to download them. Without the dependencies the script will loose some to all functionality.
-
-check_dependencies() {
-     permissions_prompt
-        dependencies=(aircrack-ng mdk3 xterm macchanger)
-            for d in "${dependencies[*]}"; do
-                if [ "$(dpkg-query -W -f='${Status}' "$d" 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
-                echo -e "${LBLUE}Some or all of the following packages must be installed for the script to run...\n${LRED}${d}\n${LBLUE}Would you like to install them now? (Y/N)"
+#downloads required dependencies
+package_function() {
+    clear
+    echo -e "${LRED}Missing Dependencies: ${YELLOW}${d}"
+                echo -e "${LBLUE}Downloads Dependencies?(Y/N)"
                 read -r r
 
                 if [[ "$r" == ["yY"]* ]]; then
@@ -252,21 +249,31 @@ check_dependencies() {
                         fi
                     fi
                 fi
-            fi
         fi
     fi
 fi
-done
 }
 
-#calls check dependencies var to check for required dependencies for the script
+#checks for dependent packages and then gives the user the option to download them. Without the dependencies the script will loose some to all functionality.
+
+check_dependencies () {
+     permissions_prompt
+        dependencies=(aircrack-ng mdk3 xterm macchanger)
+                for d in "${dependencies[*]}"; do
+                depends=$(dpkg-query -W --showformat='${Status}\n' ${d} | grep "not-installed")
+                if [ "${depends}" == "unknown ok not-installed" ]; then
+                package_function
+                else
+                intro_2
+                fi
+                done
+}
+
+#calls check dependencies function to check for required dependencies for the script
 check_dependencies
 
-#calls permission prompt var to check for the required root privileges.
+#calls permission prompt function to check for the required root privileges.
 permissions_prompt
-
-#calls intro 2 function
-intro_2
 
 #
 clear
