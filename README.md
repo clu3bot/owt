@@ -53,6 +53,10 @@ This tool compiles some necessary tools for wifi auditing in a unix bash script 
 ~ $ sudo bash troubleshoot.sh
 ```
 
+# owt Premium Edition
+
+* [Premium](https://github.com/clu3bot/owt/wiki/owt-Premium)
+
 # Dependencies 
 * aircrack-ng 
 * mdk3
