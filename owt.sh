@@ -225,18 +225,37 @@ permissions_prompt () {
 
 #checks for dependent packages and then gives the user the option to download them. Without the dependencies the script will loose some to all functionality.
 
-check_dependencies () {
-    permissions_prompt
-    dependencies=(aircrack-ng mdk3 xterm macchanger)
-        for d in "${dependencies[*]}"; do
-            if [ "$(dpkg-query -W -f='${Status}' $d 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
-    	echo -e "${LBLUE}Some or all of the following packages must be installed for the script to run...\n${LRED}${d}\n${LBLUE}Would you like to install them now? (Y/N)"
-    read -r r
-    if [[ "$r" == ["yY"]* ]]; then
-    	sudo apt-get install $d;
+check_dependencies() {
+     permissions_prompt
+        dependencies=(aircrack-ng mdk3 xterm macchanger)
+            for d in "${dependencies[*]}"; do
+                if [ "$(dpkg-query -W -f='${Status}' "$d" 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
+                echo -e "${LBLUE}Some or all of the following packages must be installed for the script to run...\n${LRED}${d}\n${LBLUE}Would you like to install them now? (Y/N)"
+                read -r r
+
+                if [[ "$r" == ["yY"]* ]]; then
+
+                if [ -x "$(command -v apt-get)" ]; then
+                sudo apt-get install $d;
+                if [ -x "$(command -v apk)" ]; then
+                    sudo apk add --no-cache $d;
+                if [ -x "$(command -v dnf)" ]; then
+                        sudo dnf install $d;
+                if [ -x "$(command -v zypper)" ]; then
+                            sudo zypper install $d;
+                if [ -x "$(command -v pacman)" ]; then
+                                sudo pacman -S $d;
+                else
+                    echo -e "${LRED}Could not locate a package manager."
+                    echo -e "${LBLUE}Try mannually installing the following packages${NONE}:\n $d" >&2;
+                        fi
+                    fi
+                fi
+            fi
+        fi
     fi
-    fi
-    done
+fi
+done
 }
 
 #calls check dependencies var to check for required dependencies for the script
