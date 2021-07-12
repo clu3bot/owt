@@ -114,7 +114,7 @@ echo -e "${LRED}
     echo -e "${LBLUE}\n     Created by ${creator}"
     echo -e "${LBLUE}                 Version ${version}${NONE}"
     echo -e "${YELLOW}\n                     ...${NONE} "
-        sleep 1.5
+        sleep 2.8
     clear
     ask_for_updates
 }
