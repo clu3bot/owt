@@ -41,6 +41,7 @@ This tool compiles some necessary tools for wifi auditing in a unix bash script 
 ```
 **Note: owt requires root privileges**
 
+**Make sure to allow updates regularly**
 # Usage
 **Detailed How-to of owt can be found here**
 * [Usage](https://github.com/clu3bot/owt/wiki/Usage)
