@@ -199,7 +199,7 @@ clear
         dn=$(lsb_release -is)
             ewr "[${LRED}Distribution${NONE}] ${LBLUE}${dn}${NONE}\n"
         ewr "${LGREEN}-------------------------------------------------${NONE}"
-    ewr "${LBLUE}Check if all necessary packages are installed${NONE}"
+    ewr "${LBLUE}Now checking if for Interface Mode${NONE}"
     read -r -p "Press Enter to Continue.."
 }
 
