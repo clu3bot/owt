@@ -29,7 +29,7 @@ This tool compiles some necessary tools for wifi auditing in a unix bash script 
     
    <p align="center">
     <a href="">
-    <img src="https://img.shields.io/badge/OWT-version%203.0-orange?style=for-the-badge&logo=appveyor?logo=data:none" />
+    <img src="https://img.shields.io/badge/OWT-version%203.1-orange?style=for-the-badge&logo=appveyor?logo=data:none" />
     </a>
    </p> 
    
