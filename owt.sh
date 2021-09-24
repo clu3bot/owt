@@ -2,7 +2,7 @@
 #Offensive Wifi Toolkit (owt)
 #Project start date (Feb. 8 2021)
 #Created By Brennan Mccown (clu3bot)
-#Version 3.0
+#Version 3.1
 #This project is licensed with MIT License.
 
 
@@ -22,7 +22,7 @@ GREEN='\033[0;32m'
 S=1000
 mon=Monitor
 man=Managed
-version="3.0"
+version="3.1"
 language="English"
 #user="clu3bot"
 github="https://github.com/clu3bot/"
