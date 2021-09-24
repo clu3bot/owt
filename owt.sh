@@ -3,7 +3,7 @@
 #Project start date (Feb. 8 2021)
 #Created By Brennan Mccown (clu3bot)
 #Version 3.0
-#GPL v3.0 License
+#This project is licensed with MIT License.
 
 
 #colors vars
@@ -26,7 +26,7 @@ version="3.0"
 language="English"
 #user="clu3bot"
 github="https://github.com/clu3bot/"
-filename="OWT"
+filename="owt.sh"
 creator="Brennan Mccown (clu3bot)"
 contactinfo="brennanmccown@protonmail.com"
 
@@ -69,6 +69,21 @@ skip_updates () {
     ewr "${LGREEN}Skipping Updates..${NONE}"
   sleep 0.4
 
+}
+
+
+#checks to see if dns can be established or not 
+
+check_dns () {
+    if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+        sleep 0.1
+            else
+        ewr "${RED} DNS could not be established. Please read help.txt for more iformation.${NONE}"
+        sleep 1.5
+    ewr "${LGREEN}Returning to Main Menu..${NONE}"
+  sleep 1.7
+main_menu
+fi
 }
 
 #checks to see if dns can be established or not which determines if updates will procede.
@@ -114,7 +129,7 @@ echo -e "${LRED}
     echo -e "${LBLUE}\n     Created by ${creator}"
     echo -e "${LBLUE}                 Version ${version}${NONE}"
     echo -e "${YELLOW}\n                     ...${NONE} "
-        sleep 2.8
+        sleep 1.5
     clear
     ask_for_updates
 }
@@ -182,8 +197,8 @@ check_iface() {
 #print second intro
 
 intro_2 () {
-clear
     check_for_root
+    clear
         ewr  "${LRED}Welcome To Offensive Wifi Toolkit${NONE}\n"
             ewr  "${LGREEN}-------------------------------------------------${NONE}"
         ewr  "${YELLOW}These tools are meant for use on networks you own\nHack at your own risk\n${NONE}"
@@ -199,7 +214,7 @@ clear
         dn=$(lsb_release -is)
             ewr "[${LRED}Distribution${NONE}] ${LBLUE}${dn}${NONE}\n"
         ewr "${LGREEN}-------------------------------------------------${NONE}"
-    ewr "${LBLUE}Now checking if for Interface Mode${NONE}"
+    ewr "${LBLUE}Check if all necessary packages are installed${NONE}"
     read -r -p "Press Enter to Continue.."
 }
 
@@ -224,11 +239,14 @@ permissions_prompt () {
     fi
 }
 
-#downloads required dependencies
-package_function() {
-    clear
-    echo -e "${LRED}You're Missing some or all of these Dependencies: ${YELLOW}${d}"
-                echo -e "${LBLUE}Download Dependencies?(Y/N)"
+###beta code for improved checking for dependencies
+
+check_dependencies() {
+     permissions_prompt
+        dependencies=(aircrack-ng mdk3 xterm macchanger)
+            for d in "${dependencies[*]}"; do
+                if [ "$(dpkg-query -W -f='${Status}' "$d" 2>/dev/null | grep -c "ok installed")" -eq 0 ]; then
+                echo -e "${LBLUE}Some or all of the following packages must be installed for the script to run...\n${LRED}${d}\n${LBLUE}Would you like to install them now? (Y/N)"
                 read -r r
 
                 if [[ "$r" == ["yY"]* ]]; then
@@ -249,31 +267,21 @@ package_function() {
                         fi
                     fi
                 fi
+            fi
         fi
     fi
 fi
+done
 }
 
-#checks for dependent packages and then gives the user the option to download them. Without the dependencies the script will loose some to all functionality.
-
-check_dependencies () {
-     permissions_prompt
-        dependencies=(aircrack-ng mdk3 xterm macchanger)
-                for d in "${dependencies[*]}"; do
-                depends=$(dpkg-query -W --showformat='${Status}\n' ${d} | grep "not-installed")
-                if [ "${depends}" == "unknown ok not-installed" ]; then
-                package_function
-                else
-                intro_2
-                fi
-                done
-}
-
-#calls check dependencies function to check for required dependencies for the script
+#calls check dependencies var to check for required dependencies for the script
 check_dependencies
 
-#calls permission prompt function to check for the required root privileges.
+#calls permission prompt var to check for the required root privileges.
 permissions_prompt
+
+#calls intro 2 function
+intro_2
 
 #
 clear
@@ -401,7 +409,7 @@ clear
 	        ewr "${YELLOW}Filename${NONE}:${YELLOW}$filename${NONE}"
 	    ewr "${YELLOW}Contact${NONE}:${YELLOW}$contactinfo${NONE}"
 	ewr "${PURPLE}--------------------------------${NONE}\n"
-	    ewr "${LRED}Press 1 to return to Main Menu${NONE}"
+	    ewr "${LRED}Press ${GREEN}[${NONE}Enter${GREEN}] ${LRED}to return to Main Menu${NONE}"
 }
 
 #creates the wifi attacks menu function
@@ -622,12 +630,47 @@ mac_spoof () {
         sudo ifconfig $iface down
         sudo macchanger -r ${iface}
         sleep 1
-        echo -e "${LRED}Your mac-address has now been changed.${NONE}"
+        ewr "${LRED}Your mac-address has now been changed.${NONE}"
+        sleep 2.5
         clear
         sleep 1.5
-        echo -e "${YELLOW}Returning to Main Menu${NONE}"
+        ewr "${YELLOW}Returning to Main Menu${NONE}"
         sleep 1.5
         main_menu
+}
+
+send_sms(){
+   clear
+   check_dns
+   ewr "\n${RED}    NOTE: ${NONE}SMS Messaging allows one free sms message per day, per device.\n\n"     
+   ewr "${YELLOW}    Enter Number as > ${LBLUE} 1 234 234 6789   ${LRED} With No spaces"
+   ewr "${GREEN}    Example = ${LRED}12342346789\n"
+   ewr "${GREEN}    Enter Phone Number With Country Code:"
+   
+   read -r phonenumber
+   
+   echo -e "\n${GREEN} Enter Message:"
+   
+   read -r sms
+
+   smssent=$(curl -# -X POST https://textbelt.com/text --data-urlencode phone="$phonenumber" --data-urlencode message="$sms" -d key=textbelt)
+   
+   if grep -q true <<<"$smssent"
+   
+   then
+      
+      echo -e "\n${GREEN} SUCCESS"
+      echo -e "${GREEN} ----------------------------------------------"
+      echo "$smssent"
+      echo -e "${GREEN} ----------------------------------------------"
+   else
+      echo -e "\n${LRED} FAIL\n"
+      echo -e "${GREEN} ----------------------------------------------"
+      echo "$smssent"
+      echo -e "${GREEN} ----------------------------------------------\n"
+   fi
+   echo "Press any key to return to Main Menu"
+   read -r 
 }
 
 #checks if interface exists for variable assignment
@@ -830,7 +873,8 @@ echo -e "${LRED}
 	ewr "${PURPLE}----------${NONE}[${LBLUE}Other${NONE}]${PURPLE}-----------\n"
         ewr "${NONE}[${LGREEN}6${NONE}] ${YELLOW}Spoof Your Mac Address"
 	ewr "${NONE}[${LGREEN}7${NONE}] ${YELLOW}ARP Scan For Devices"
-	ewr "${NONE}[${LGREEN}8${NONE}] ${YELLOW}About owt\n"
+    ewr "${NONE}[${LGREEN}8${NONE}] ${YELLOW}Send SMS Message to a Phone Number"
+	ewr "${NONE}[${LGREEN}9${NONE}] ${YELLOW}About owt\n"
 	ewr "${PURPLE}----------------------------${NONE}"
 while true; do
 ewr "\n${LRED}Select an option:${NONE}"
@@ -871,6 +915,10 @@ case $option in
      arp_scan
      ;;
   8) echo -e "\n${YELLOW}Selected${NONE}» [${YELLOW}$option${NONE}]"
+     read -r -p "Are you sure? Press Enter.."
+     send_sms
+     ;;
+  9) echo -e "\n${YELLOW}Selected${NONE}» [${YELLOW}$option${NONE}]"
      read -r -p "Are you sure? Press Enter.."
      about_page
      ;;
