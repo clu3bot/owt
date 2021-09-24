@@ -53,9 +53,9 @@ This tool compiles some necessary tools for wifi auditing in a unix bash script 
 ~ $ sudo bash troubleshoot.sh
 ```
 
-# owt Premium Edition
+# Recent Additions
 
-* [Premium](https://github.com/clu3bot/owt/wiki/owt-Premium)
+* Added SMS messages. One free sms message per day using Textbelt.
 
 # Dependencies 
 * aircrack-ng 
